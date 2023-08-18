@@ -4,6 +4,7 @@ frameworkVersion: "3"
 
 provider:
   name: aws
+  stage: dev
   runtime: nodejs18.x
   httpApi:
     cors: true
@@ -31,7 +32,7 @@ functions:
 
 resources:
   Resources:
-    TodosDynamoDbTable:
+    ContactDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
       Properties:
