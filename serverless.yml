@@ -5,10 +5,44 @@ frameworkVersion: "3"
 provider:
   name: aws
   runtime: nodejs18.x
+  httpApi:
+    cors: true
+  iam:
+    role:
+      name: crud-role
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "*"
 
 functions:
-  hello:
-    handler: handler.hello
+  create:
+    handler: src/functions/post.createContact
+    events:
+      - httpApi:
+          path: /contact
+          method: POST
+
+resources:
+  Resources:
+    TodosDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: contacts
 
 plugins:
   - serverless-offline
