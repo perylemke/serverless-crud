@@ -23,12 +23,24 @@ provider:
           Resource: "*"
 
 functions:
-  create:
-    handler: src/functions/post.createContact
+  createContact:
+    handler: src/functions/create.createContact
     events:
       - httpApi:
           path: /contact
           method: POST
+  readAllContacts:
+    handler: src/functions/read.getAllContacts
+    events:
+      - httpApi:
+          path: /contact
+          method: GET
+  readContactById:
+    handler: src/functions/read.getContactById
+    events:
+      - httpApi:
+          path: /contact/{id}
+          method: GET
 
 resources:
   Resources:

@@ -1,6 +1,6 @@
 const chai = require('chai');
 const expect = chai.expect;
-const createContactHandler = require('../src/functions/post');
+const createContactHandler = require('../src/functions/create');
 
 describe('createContact', () => {
   it('must be create a new contact', async () => {
