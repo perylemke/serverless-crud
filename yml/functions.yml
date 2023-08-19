@@ -1,0 +1,25 @@
+functions:
+  createContact:
+    handler: src/functions/create.createContact
+    events:
+      - httpApi:
+          path: /api/v1/contacts
+          method: POST
+  readAllContacts:
+    handler: src/functions/read.getAllContacts
+    events:
+      - httpApi:
+          path: /api/v1/contacts
+          method: GET
+  readContactById:
+    handler: src/functions/read.getContactById
+    events:
+      - httpApi:
+          path: /api/v1/contacts/{id}
+          method: GET
+  updateContact:
+    handler: src/functions/update.updateContact
+    events:
+      - httpApi:
+          path: /api/v1/contacts/{id}
+          method: PUT

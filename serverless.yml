@@ -6,6 +6,7 @@ provider:
   name: aws
   stage: dev
   runtime: nodejs18.x
+  region: us-east-1
   httpApi:
     cors: true
   iam:
@@ -22,31 +23,16 @@ provider:
             - dynamodb:DeleteItem
           Resource: "*"
 
-functions:
-  createContact:
-    handler: src/functions/create.createContact
-    events:
-      - httpApi:
-          path: /contact
-          method: POST
-  readAllContacts:
-    handler: src/functions/read.getAllContacts
-    events:
-      - httpApi:
-          path: /contact
-          method: GET
-  readContactById:
-    handler: src/functions/read.getContactById
-    events:
-      - httpApi:
-          path: /contact/{id}
-          method: GET
+package:
+  excludeDevDependencies: true
+
+functions: ${file(yml/functions.yml):functions}
 
 resources:
   Resources:
     ContactDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
+      # DeletionPolicy: Delete
       Properties:
         AttributeDefinitions:
           - AttributeName: id
@@ -57,6 +43,4 @@ resources:
         BillingMode: PAY_PER_REQUEST
         TableName: contacts
 
-plugins:
-  - serverless-offline
-  - serverless-iam-roles-per-function
+plugins: ${file(yml/plugins.yml):plugins}
