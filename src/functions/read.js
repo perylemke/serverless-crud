@@ -4,9 +4,7 @@ const AWS = require('aws-sdk');
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-AWS.config.update({ region: 'us-east-1' });
-
-const getAllContacts = async (event) => {
+const getAllContacts = async () => {
     try {
         const res = await dynamoDb.scan({
             TableName: 'contacts'
@@ -16,6 +14,7 @@ const getAllContacts = async (event) => {
             body: JSON.stringify(res.Items)
         };
     } catch (error) {
+        console.error('Error fetching contact:', error)
         return {
             statusCode: 500,
             body: JSON.stringify({
@@ -36,6 +35,7 @@ const getContactById = async (event) => {
         }).promise();
 
         if (!res.Item) {
+            console.error('Contact not found')
             return {
                 statusCode: 404,
                 body: JSON.stringify({
@@ -49,11 +49,11 @@ const getContactById = async (event) => {
             body: JSON.stringify(res.Item)
         };
     } catch (error) {
-        console.log('error', error)
+        console.error('Error fetching contact:', error)
         return {
             statusCode: 500,
             body: JSON.stringify({
-                message: 'Error fetching contact:'
+                message: 'Error fetching contact'
             })
         }
     }

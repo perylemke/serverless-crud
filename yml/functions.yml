@@ -23,3 +23,9 @@ functions:
       - httpApi:
           path: /api/v1/contacts/{id}
           method: PUT
+  deleteContact:
+    handler: src/functions/delete.deleteContact
+    events:
+      - httpApi:
+          path: /api/v1/contacts/{id}
+          method: DELETE
