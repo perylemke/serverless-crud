@@ -8,42 +8,58 @@ const updateContact = async (event) => {
         return {
             statusCode: 400,
             body: JSON.stringify({
-                message: 'Validation failed'
+                message: 'Request invalid.'
             })
         }
     }
     const req = JSON.parse(event.body);
     if (typeof req.email !== 'string' || typeof req.name !== 'string') {
         console.error('Validation failed');
-        callback(null, {
+        return {
             statusCode: 400,
             body: JSON.stringify({
                 message: 'Couldn\'t update the contact. Any field with type invalid.'
             })
-        });
-        return;
+        };
     }
 
     const id = event.pathParameters.id;
-    const params = {
+    const getContactParams = {
         TableName: 'contacts',
         Key: {
             id
         },
-        UpdateExpression: 'set #name = :name, #email = :email',
-        ExpressionAttributeValues: {
-            ':name': req.name,
-            ':email': req.email,
-        },
-        ExpressionAttributeNames: {
-            '#name': 'name',
-            '#email': 'email',
-        },
-        ReturnValues: 'ALL_NEW',
     };
 
     try {
-        const res = await dynamoDb.update(params).promise();
+        const existingContact = await dynamoDb.get(getContactParams).promise();
+        if (!existingContact.Item) {
+            return {
+                statusCode: 404,
+                body: JSON.stringify({
+                    message: 'Contact not found'
+                })
+            };
+        }
+
+        const updateParams = {
+            TableName: 'contacts',
+            Key: {
+                id
+            },
+            UpdateExpression: 'set #name = :name, #email = :email',
+            ExpressionAttributeValues: {
+                ':name': req.name,
+                ':email': req.email,
+            },
+            ExpressionAttributeNames: {
+                '#name': 'name',
+                '#email': 'email',
+            },
+            ReturnValues: 'ALL_NEW',
+        };
+
+        const res = await dynamoDb.update(updateParams).promise();
         return {
             statusCode: 200,
             body: JSON.stringify(res.Attributes),
