@@ -1,12 +1,15 @@
 'use strict';
 
 const AWS = require('aws-sdk');
+
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+const TABLE_NAME = process.env.tableName;
 
 const deleteContact = async (event) => {
     const id = event.pathParameters.id;
     const params = {
-        TableName: 'contacts',
+        TableName: TABLE_NAME,
         Key: {
             id
         },

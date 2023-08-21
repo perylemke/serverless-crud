@@ -8,5 +8,8 @@ jspm_packages
 # Env files
 .env
 
-# JSON test files
-*.json
+# Test files
+testFiles
+
+# local dynamodb files
+.dynamodb

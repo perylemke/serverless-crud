@@ -4,7 +4,7 @@
   "description": "A simple CRUD builded with NodeJS, Serverless Framework and DynamoDB.",
   "main": "sf.js",
   "scripts": {
-    "test": "mocha tests/*.test.js"
+    "test": "mocha tests/*.js"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +16,12 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@aws-sdk/client-dynamodb": "^3.395.0",
     "aws-sdk-mock": "^5.8.0",
-    "jest": "^29.6.2"
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "serverless-dynamodb": "^0.2.43",
+    "sinon": "^15.2.0",
+    "sinon-chai": "^3.7.0"
   }
 }

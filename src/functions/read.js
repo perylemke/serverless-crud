@@ -4,17 +4,19 @@ const AWS = require('aws-sdk');
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
+const TABLE_NAME = process.env.tableName;
+
 const getAllContacts = async () => {
     try {
         const res = await dynamoDb.scan({
-            TableName: 'contacts'
+            TableName: TABLE_NAME
         }).promise()
         return {
             statusCode: 200,
             body: JSON.stringify(res.Items)
         };
     } catch (error) {
-        console.error('Error fetching contact:', error)
+        // console.error('Error fetching contact:', error)
         return {
             statusCode: 500,
             body: JSON.stringify({
@@ -28,7 +30,7 @@ const getContactById = async (event) => {
     const id = event.pathParameters.id;
     try {
         const res = await dynamoDb.get({
-            TableName: 'contacts',
+            TableName: TABLE_NAME,
             Key: {
                 id
             }

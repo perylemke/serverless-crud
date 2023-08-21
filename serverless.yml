@@ -4,14 +4,16 @@ frameworkVersion: "3"
 
 provider:
   name: aws
-  stage: dev
+  stage: ${opt:stage, "dev"}
   runtime: nodejs18.x
   region: us-east-1
+  environment:
+    tableName: ${self:custom.tableName}
   httpApi:
     cors: true
   iam:
     role:
-      name: crud-role
+      name: crud-role-${self:provider.stage}
       statements:
         - Effect: 'Allow'
           Action:
@@ -22,9 +24,23 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource: "*"
+custom:
+    tableName: "contacts-${self:provider.stage}"
+    dynamodb:
+        stages:
+            - local
+        start:
+            docker: true
+            port: 8000
+            inMemory: true
+            migrate: true
+        migration:
+            dir: offline/migrations
+    jest:
 
 package:
   excludeDevDependencies: true
+  individually: true
 
 functions: ${file(yml/functions.yml):functions}
 
@@ -34,6 +50,7 @@ resources:
       Type: 'AWS::DynamoDB::Table'
       # DeletionPolicy: Delete
       Properties:
+        TableName: "contacts-${self:provider.stage}"
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
@@ -41,6 +58,5 @@ resources:
           - AttributeName: id
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
-        TableName: contacts
 
 plugins: ${file(yml/plugins.yml):plugins}

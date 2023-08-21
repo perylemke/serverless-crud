@@ -1,7 +1,10 @@
 'use strict';
 
 const AWS = require('aws-sdk');
+
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+const TABLE_NAME = process.env.tableName;
 
 const updateContact = async (event) => {
     if (!event.body) {
@@ -25,7 +28,7 @@ const updateContact = async (event) => {
 
     const id = event.pathParameters.id;
     const getContactParams = {
-        TableName: 'contacts',
+        TableName: TABLE_NAME,
         Key: {
             id
         },
@@ -43,7 +46,7 @@ const updateContact = async (event) => {
         }
 
         const updateParams = {
-            TableName: 'contacts',
+            TableName: TABLE_NAME,
             Key: {
                 id
             },

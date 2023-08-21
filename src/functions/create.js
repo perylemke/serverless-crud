@@ -5,8 +5,10 @@ const AWS = require('aws-sdk');
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
+const TABLE_NAME = process.env.tableName;
+
 // createContact function
-const createContact = async (event, callback) => {
+const createContact = async (event) => {
     if (!event.body) {
         return {
             statusCode: 400,
@@ -19,17 +21,15 @@ const createContact = async (event, callback) => {
     const req = JSON.parse(event.body);
     if (typeof req.email !== 'string' || typeof req.name !== 'string') {
         console.error('Validation failed');
-        callback(null, {
+        return {
             statusCode: 400,
             body: JSON.stringify({
                 message: 'Couldn\'t create the contact.'
             })
-        });
-        return;
+        };
     }
-
     const params = {
-        TableName: 'contacts',
+        TableName: TABLE_NAME,
         Item: {
             id: uuid.v4(),
             name: req.name,
@@ -44,6 +44,7 @@ const createContact = async (event, callback) => {
             body: JSON.stringify(params.Item)
         }
     } catch (error) {
+        console.error(error)
         return {
             error: error
         }
