@@ -1,0 +1,2 @@
+custom:
+    tableName: "contacts-${self:provider.stage}"

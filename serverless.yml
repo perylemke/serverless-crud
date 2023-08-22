@@ -11,52 +11,9 @@ provider:
     tableName: ${self:custom.tableName}
   httpApi:
     cors: true
-  iam:
-    role:
-      name: crud-role-${self:provider.stage}
-      statements:
-        - Effect: 'Allow'
-          Action:
-            - dynamodb:Query
-            - dynamodb:Scan
-            - dynamodb:GetItem
-            - dynamodb:PutItem
-            - dynamodb:UpdateItem
-            - dynamodb:DeleteItem
-          Resource: "*"
-custom:
-    tableName: "contacts-${self:provider.stage}"
-    dynamodb:
-        stages:
-            - local
-        start:
-            docker: true
-            port: 8000
-            inMemory: true
-            migrate: true
-        migration:
-            dir: offline/migrations
-    jest:
 
-package:
-  excludeDevDependencies: true
-  individually: true
-
+custom: ${file(yml/custom.yml):custom}
 functions: ${file(yml/functions.yml):functions}
-
-resources:
-  Resources:
-    ContactDynamoDbTable:
-      Type: 'AWS::DynamoDB::Table'
-      # DeletionPolicy: Delete
-      Properties:
-        TableName: "contacts-${self:provider.stage}"
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        BillingMode: PAY_PER_REQUEST
-
+package: ${file(yml/package.yml):package}
 plugins: ${file(yml/plugins.yml):plugins}
+resources: ${file(yml/resources.yml):resources}

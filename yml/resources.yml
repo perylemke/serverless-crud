@@ -1,0 +1,14 @@
+resources:
+  Resources:
+    ContactDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      # DeletionPolicy: Delete
+      Properties:
+        TableName: "contacts-${self:provider.stage}"
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST

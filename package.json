@@ -2,12 +2,12 @@
   "name": "serverless-crud",
   "version": "1.0.0",
   "description": "A simple CRUD builded with NodeJS, Serverless Framework and DynamoDB.",
-  "main": "sf.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha tests/*.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["serverless"],
+  "author": "Pery Lemke",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.1439.0",

@@ -1,30 +1,66 @@
 functions:
   createContact:
     handler: src/functions/create.createContact
+    iamRoleStatementsName: crud-role-createContact-${self:provider.stage}
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.tableName}
     events:
       - httpApi:
           path: /api/v1/contacts
           method: POST
+
   readAllContacts:
     handler: src/functions/read.getAllContacts
+    iamRoleStatementsName: crud-role-readAllContacts-${self:provider.stage}
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - dynamodb:Scan
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.tableName}
     events:
       - httpApi:
           path: /api/v1/contacts
           method: GET
+
   readContactById:
     handler: src/functions/read.getContactById
+    iamRoleStatementsName: crud-role-readContactById-${self:provider.stage}
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.tableName}
     events:
       - httpApi:
           path: /api/v1/contacts/{id}
           method: GET
+
   updateContact:
     handler: src/functions/update.updateContact
+    iamRoleStatementsName: crud-role-updateContact-${self:provider.stage}
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.tableName}
     events:
       - httpApi:
           path: /api/v1/contacts/{id}
           method: PUT
+          
   deleteContact:
     handler: src/functions/delete.deleteContact
+    iamRoleStatementsName: crud-role-deleteContact-${self:provider.stage}
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:DeleteItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.tableName}
     events:
       - httpApi:
           path: /api/v1/contacts/{id}
