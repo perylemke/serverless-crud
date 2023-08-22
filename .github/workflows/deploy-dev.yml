@@ -22,4 +22,4 @@ jobs:
       - name: Running Unit tests
         run: |
           chmod +x scripts/unit_tests.sh
-          ./unit_tests.sh
+          ./scripts/unit_tests.sh
