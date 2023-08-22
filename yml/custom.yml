@@ -3,3 +3,6 @@ custom:
     export-env: # serverless-export-env config
         filename: .awsenv
         overwrite: true
+    prune:
+        automatic: true
+        number: 1
