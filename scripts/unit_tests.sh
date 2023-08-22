@@ -17,7 +17,7 @@ echo "Execute unit tests..."
 ${NPM} test
 
 if [ $? -ne 0 ]; then
-    echo "Fails npm ci. Please review the dependencies!"
+    echo "Tests fail. Please review the log!"
     exit 1
 fi
 

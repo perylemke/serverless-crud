@@ -1,2 +1,5 @@
 custom:
     tableName: "contacts-${self:provider.stage}"
+    export-env: # serverless-export-env config
+        filename: .awsenv
+        overwrite: true

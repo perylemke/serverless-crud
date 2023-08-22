@@ -7,10 +7,17 @@ provider:
   stage: ${opt:stage, "dev"}
   runtime: nodejs18.x
   region: us-east-1
-  environment:
-    tableName: ${self:custom.tableName}
   httpApi:
     cors: true
+  environment:
+    tableName: ${self:custom.tableName}
+    stage: ${self:provider.stage}
+    region: ${self:provider.region}
+    service: ${self:service}
+    httpApiGatewayEndpointId: !Ref HttpApi
+  tags:
+    Application: ${self:service}
+    Stage: ${self:provider.stage}
 
 custom: ${file(yml/custom.yml):custom}
 functions: ${file(yml/functions.yml):functions}
