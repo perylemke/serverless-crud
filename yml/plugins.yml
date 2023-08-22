@@ -1,4 +1,2 @@
 plugins:
   - serverless-iam-roles-per-function
-  - serverless-dynamodb
-  - serverless-offline
