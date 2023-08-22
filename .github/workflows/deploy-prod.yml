@@ -24,7 +24,7 @@ jobs:
       - name: Instaling dependencies
         run: npm ci
 
-      - name: Deploy on AWS to running integration tests
+      - name: Deploy on AWS in Production
         uses: serverless/github-action@v3.2
         with:
           args: deploy --stage production
