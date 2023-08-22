@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const AWS = require('aws-sdk');
 
-const create = require('../src/functions/create'); // Substitua pelo caminho correto para o seu arquivo
+const create = require('../../src/functions/create'); // Substitua pelo caminho correto para o seu arquivo
 
 chai.use(sinonChai);
 const expect = chai.expect;

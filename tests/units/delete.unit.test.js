@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const AWS = require('aws-sdk');
 
-const deleteFunc = require('../src/functions/delete'); // Substitua pelo caminho correto
+const deleteFunc = require('../../src/functions/delete'); // Substitua pelo caminho correto
 
 chai.use(sinonChai);
 const expect = chai.expect;

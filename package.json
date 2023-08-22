@@ -1,10 +1,10 @@
 {
   "name": "serverless-crud",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A simple CRUD builded with NodeJS, Serverless Framework and DynamoDB.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/*.js"
+    "test": "mocha tests/units/*.unit.test.js"
   },
   "keywords": [
     "serverless"

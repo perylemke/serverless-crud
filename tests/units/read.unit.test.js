@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const AWS = require('aws-sdk');
 
-const read = require('../src/functions/read')
+const read = require('../../src/functions/read')
 
 chai.use(sinonChai);
 const expect = chai.expect;
