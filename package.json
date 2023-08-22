@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha tests/units/*.unit.test.js",
-    "integration": "sls export-env --stage test && mocha --timeout 120000 tests/integration/*.integration.test.js"
+    "integration": "sls export-env --stage test && mocha --timeout 120000 tests/integration/*.integration.test.js",
+    "e2e": "sls export-env --stage test && mocha --timeout 120000 tests/e2e/*.e2e.test.js"
   },
   "keywords": [
     "serverless"
