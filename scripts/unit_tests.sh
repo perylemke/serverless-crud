@@ -17,12 +17,12 @@ echo "Execute unit tests..."
 ${NPM} test
 
 if [ $? -ne 0 ]; then
-    echo "Tests fail. Please review the log!"
+    echo "Unit tests fail. Please review the log!"
     exit 1
 fi
 
 echo "Disable debug mode..."
 set +x
 
-echo "Tests running sucesseful..."
+echo "Unit tests running sucesseful..."
 exit 0

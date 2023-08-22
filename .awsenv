@@ -1,0 +1,5 @@
+tableName=contacts-test
+stage=test
+region=us-east-1
+service=serverless-crud
+httpApiGatewayEndpointId=48les7hfj6
