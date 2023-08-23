@@ -2,6 +2,7 @@ const { default: axios } = require('axios')
 const path = require('path');
 const dotenv = require('dotenv');
 const chai = require('chai');
+const assert = require('assert');
 const expect = chai.expect;
 
 const envPath = path.resolve(__dirname, '../../.awsenv');
@@ -35,7 +36,10 @@ describe('Test a happy path', () => {
 
     it('get one contact and returns a 200', async () => {
         const contacts = await axios.get('/api/v1/contacts');
-        const id = contacts.data[0].id
+        if (contacts.data.length < 1) {
+            assert.fail("ERROR: Empty database.")
+        }
+        const id = contacts.data[contacts.data.length - 1].id
         const res = await axios.get('/api/v1/contacts' + '/' + id)
 
         expect(res.status).to.equal(200);
@@ -48,7 +52,10 @@ describe('Test a happy path', () => {
         };
 
         const contacts = await axios.get('/api/v1/contacts');
-        const id = contacts.data[0].id
+        if (contacts.data.length < 1) {
+            assert.fail("ERROR: Empty database.")
+        }
+        const id = contacts.data[contacts.data.length - 1].id
         const res = await axios.put('/api/v1/contacts' + '/' + id, payload)
 
         expect(res.status).to.equal(200);
@@ -61,7 +68,10 @@ describe('Test a happy path', () => {
 
     it('delete a user and returns 200', async () => {      
         const contacts = await axios.get('/api/v1/contacts');
-        const id = contacts.data[0].id
+        if (contacts.data.length < 1) {
+            assert.fail("ERROR: Empty database.")
+        }
+        const id = contacts.data[contacts.data.length - 1].id
         const res = await axios.delete('/api/v1/contacts' + '/' + id)
 
         expect(res.status).to.equal(200);
